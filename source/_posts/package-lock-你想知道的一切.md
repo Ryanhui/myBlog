@@ -3,14 +3,13 @@ layout: 关于
 title: package-lock 你想知道的一切
 date: 2018-08-21 17:45:18
 tags: 前端 分享
-
 ---
+
+## [文章原文地址](https://medium.com/coinmonks/everything-you-wanted-to-know-about-package-lock-json-b81911aa8ab8)
 
 ## 前言
 
 在npm升级到5.x.x以后，会自动在目录下生成一个名为Package-lock.json的文件。文件内容与package.json相似，但更为详细。虽然可以放任这个文件不管，但是时间长了就可能会出现依赖丢失或者安装错误版本依赖的情况。我们可以删除 package-lock.json 这个文件重新 npm install 。不过，这样似乎不妥。
-
-
 
 ## 总体而言
 
@@ -87,5 +86,20 @@ package-lock 就是为了解决上述问题而生的。
     },
 ```
 
+同样，requires里的每个package都能找到入口信息。
 
+随后，人们不再使用package.json解决安装包，而是使用package-lock.json。因为它指定了所有需要的包的版本，包下载地址，哈希值。每次安装依赖的结果必然相同，无论何时何地。
 
+## 争议的存在
+
+虽然package-lock解决了一个普遍的问题，但是为什么还是有很多人推崇禁用它或者质疑它是否真的好用。
+
+在npm 5.x.x以前，人们习惯了使用package.json维护项目的依赖。但是当package-lock出现时，它跟人们预期的相反，修改package.json并不会反映到package-lock上。
+
+比如：一个包在package和package-lock都有记录，手动修改了package里的版本号然后npm install，相应的包并不会安装，因为有package-lock里仍然为旧版本。
+
+再比如：一个包只存在于package-lock中，另一个开发者根据package.json安装依赖就会丢失这个包。
+
+人们不知道哪里出了问题，要不就是删除package-lock重新npm install，要不就是直接禁用package-lock.
+
+问题的源头就是到底哪个文件才是决定依赖树的选择在左右摇摆，好在npm的维护人员决定让对package.json文件的更改自动与package-lock文件同步，发布于npm v5.1.0。
