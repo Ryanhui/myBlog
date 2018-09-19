@@ -9,7 +9,7 @@ tags: 分享
 
 一个典型的使用Kong网关的请求遵循以下流程。
 
-![图解](F:\code\myBlog\source\_posts\Kong网关入门\p1.png)
+![图解](p1.png)
 
 每一个请求API的访问首先会访问Kong，之后被代理到最终的API上。在请求和响应中间，Kong可以根据用户的需要执行很多插件，使其功能更加强大。Kong可以有效的成为每一个API请求的入口。
 
