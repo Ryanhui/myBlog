@@ -223,6 +223,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-github新手指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/24/github新手指南/">github新手指南</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/24/github新手指南/" class="archive-article-date">
+  	<time datetime="2017-12-24T07:48:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><p>本地项目文件夹推送到自己的github</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h3 id="（1）-先从github创建一个空的仓库"><a href="#（1）-先从github创建一个空的仓库" class="headerlink" title="（1） 先从github创建一个空的仓库"></a>（1） 先从github创建一个空的仓库</h3><p>先从github创建一个空的仓库，并复制链接地址</p>
+<h3 id="（2）初始化本地仓库，并提交内容到本地"><a href="#（2）初始化本地仓库，并提交内容到本地" class="headerlink" title="（2）初始化本地仓库，并提交内容到本地"></a>（2）初始化本地仓库，并提交内容到本地</h3><ol>
+<li>touch README.md</li>
+<li>git init</li>
+<li>git add .</li>
+<li>git commit -m ‘提交说明’</li>
+</ol>
+<h3 id="（3）连接到远程仓库，并将代码同步到远程仓库"><a href="#（3）连接到远程仓库，并将代码同步到远程仓库" class="headerlink" title="（3）连接到远程仓库，并将代码同步到远程仓库"></a>（3）连接到远程仓库，并将代码同步到远程仓库</h3><ol>
+<li>git remote add origin 远程仓库地址</li>
+<li>git push -u origin master</li>
+</ol>
+<h3 id="（4）继续修改本地代码，然后提交并推送到github"><a href="#（4）继续修改本地代码，然后提交并推送到github" class="headerlink" title="（4）继续修改本地代码，然后提交并推送到github"></a>（4）继续修改本地代码，然后提交并推送到github</h3><ol>
+<li>git add .</li>
+<li>git commit -m ‘提交说明’</li>
+<li>git pull</li>
+<li>git push</li>
+</ol>
+<p><a href="https://www.jianshu.com/p/6f3324e4f335" target="_blank" rel="external">转载地址及详细内容</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">分享</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/24/github新手指南/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-修改npm源" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1944,82 +2036,6 @@ body {
 
 
   
-    <article id="post-常用命令记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/17/常用命令记录/">常用命令记录</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/17/常用命令记录/" class="archive-article-date">
-  	<time datetime="2017-09-17T12:26:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Centos7中删除-var-log-message后如何重新记录日志"><a href="#Centos7中删除-var-log-message后如何重新记录日志" class="headerlink" title="Centos7中删除/var/log/message后如何重新记录日志"></a>Centos7中删除/var/log/message后如何重新记录日志</h3><p>重启rsyslog </p>
-<pre><code>systemctl stop rsyslog.service  
-systemctl start rsyslog.service  
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">分享</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/17/常用命令记录/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -2129,15 +2145,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">前端 分享</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">笔记本本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">前端 分享</a>
               </li>
             
             <div class="clearfix"></div>

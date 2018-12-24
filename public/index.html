@@ -223,6 +223,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-javascript-获取内外Ip" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/09/javascript-获取内外Ip/">javascript 获取内外Ip</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/09/javascript-获取内外Ip/" class="archive-article-date">
+  	<time datetime="2018-10-09T06:54:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>此方法不支持IE</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Get the user IP throught the webkitRTCPeerConnection</span></div><div class="line"><span class="comment"> * @param onNewIP &#123;Function&#125; listener function to expose the IP locally</span></div><div class="line"><span class="comment"> * @return undefined</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserIP</span>(<span class="params">onNewIP</span>) </span>&#123; <span class="comment">//  onNewIp - your listener function for new IPs</span></div><div class="line">    <span class="comment">//compatibility for firefox and chrome</span></div><div class="line">    <span class="keyword">var</span> myPeerConnection = <span class="built_in">window</span>.RTCPeerConnection || <span class="built_in">window</span>.mozRTCPeerConnection || <span class="built_in">window</span>.webkitRTCPeerConnection;</div><div class="line">    <span class="keyword">var</span> pc = <span class="keyword">new</span> myPeerConnection(&#123;</div><div class="line">        iceServers: []</div><div class="line">    &#125;),</div><div class="line">    noop = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</div><div class="line">    localIPs = &#123;&#125;,</div><div class="line">    ipRegex = <span class="regexp">/([0-9]&#123;1,3&#125;(\.[0-9]&#123;1,3&#125;)&#123;3&#125;|[a-f0-9]&#123;1,4&#125;(:[a-f0-9]&#123;1,4&#125;)&#123;7&#125;)/g</span>,</div><div class="line">    key;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">iterateIP</span>(<span class="params">ip</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!localIPs[ip]) onNewIP(ip);</div><div class="line">        localIPs[ip] = <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">     <span class="comment">//create a bogus data channel</span></div><div class="line">    pc.createDataChannel(<span class="string">""</span>);</div><div class="line"></div><div class="line">    <span class="comment">// create offer and set local description</span></div><div class="line">    pc.createOffer().then(<span class="function"><span class="keyword">function</span>(<span class="params">sdp</span>) </span>&#123;</div><div class="line">        sdp.sdp.split(<span class="string">'\n'</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">line</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (line.indexOf(<span class="string">'candidate'</span>) &lt; <span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">            line.match(ipRegex).forEach(iterateIP);</div><div class="line">        &#125;);</div><div class="line">        </div><div class="line">        pc.setLocalDescription(sdp, noop, noop);</div><div class="line">    &#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">reason</span>) </span>&#123;</div><div class="line">        <span class="comment">// An error occurred, so handle the failure to connect</span></div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="comment">//listen for candidate events</span></div><div class="line">    pc.onicecandidate = <span class="function"><span class="keyword">function</span>(<span class="params">ice</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) <span class="keyword">return</span>;</div><div class="line">        ice.candidate.candidate.match(ipRegex).forEach(iterateIP);</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Usage</span></div><div class="line"></div><div class="line">getUserIP(<span class="function"><span class="keyword">function</span>(<span class="params">ip</span>)</span>&#123;</div><div class="line">    alert(<span class="string">"Got IP! :"</span> + ip);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><a href="https://ourcodeworld.com/articles/read/257/how-to-get-the-client-ip-address-with-javascript-only" target="_blank" rel="external">参考</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/09/javascript-获取内外Ip/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Kong网关入门" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1210,98 +1286,6 @@ if(position.y &gt;= 900) {
 
 
   
-    <article id="post-github新手指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/24/github新手指南/">github新手指南</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/24/github新手指南/" class="archive-article-date">
-  	<time datetime="2017-12-24T07:48:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><p>本地项目文件夹推送到自己的github</p>
-<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h3 id="（1）-先从github创建一个空的仓库"><a href="#（1）-先从github创建一个空的仓库" class="headerlink" title="（1） 先从github创建一个空的仓库"></a>（1） 先从github创建一个空的仓库</h3><p>先从github创建一个空的仓库，并复制链接地址</p>
-<h3 id="（2）初始化本地仓库，并提交内容到本地"><a href="#（2）初始化本地仓库，并提交内容到本地" class="headerlink" title="（2）初始化本地仓库，并提交内容到本地"></a>（2）初始化本地仓库，并提交内容到本地</h3><ol>
-<li>touch README.md</li>
-<li>git init</li>
-<li>git add .</li>
-<li>git commit -m ‘提交说明’</li>
-</ol>
-<h3 id="（3）连接到远程仓库，并将代码同步到远程仓库"><a href="#（3）连接到远程仓库，并将代码同步到远程仓库" class="headerlink" title="（3）连接到远程仓库，并将代码同步到远程仓库"></a>（3）连接到远程仓库，并将代码同步到远程仓库</h3><ol>
-<li>git remote add origin 远程仓库地址</li>
-<li>git push -u origin master</li>
-</ol>
-<h3 id="（4）继续修改本地代码，然后提交并推送到github"><a href="#（4）继续修改本地代码，然后提交并推送到github" class="headerlink" title="（4）继续修改本地代码，然后提交并推送到github"></a>（4）继续修改本地代码，然后提交并推送到github</h3><ol>
-<li>git add .</li>
-<li>git commit -m ‘提交说明’</li>
-<li>git pull</li>
-<li>git push</li>
-</ol>
-<p><a href="https://www.jianshu.com/p/6f3324e4f335" target="_blank" rel="external">转载地址及详细内容</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">分享</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/24/github新手指南/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1411,15 +1395,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">前端 分享</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">笔记本本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">前端 分享</a>
               </li>
             
             <div class="clearfix"></div>
